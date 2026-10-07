@@ -416,7 +416,7 @@ def model_from_sent(model_name, content_type):
             output_html = _api.api_error_msg("offline")
             modelID_failed = True
         if not modelID_failed: 
-            json_data = _api.request_civit_api(f"https://civitai.com/api/v1/models?ids={modelID}&nsfw=true")
+            json_data = _api.request_civit_api(f"https://{('civitai.red' if gl.nsfw else 'civitai.com')}/api/v1/models?ids={modelID}&nsfw={('true' if gl.nsfw else 'false')}")
         else:
             json_data = None
         
@@ -506,7 +506,7 @@ def send_to_browser(model_name, content_type, click_first_item):
             modelID_failed = True
     
         if not modelID_failed:
-            gl.json_data = _api.request_civit_api(f"https://civitai.com/api/v1/models?ids={modelID}&nsfw=true")
+            gl.json_data = _api.request_civit_api(f"https://{('civitai.red' if gl.nsfw else 'civitai.com')}/api/v1/models?ids={modelID}&nsfw={('true' if gl.nsfw else 'false')}")
             output_html = _api.model_list_html(gl.json_data)
             
             number = _download.random_number(click_first_item)
@@ -782,7 +782,7 @@ def get_models(file_path, gen_hash=None):
             sha256 = gen_sha256(file_path)
         
         if sha256:
-            by_hash = f"https://civitai.com/api/v1/model-versions/by-hash/{sha256}"
+            by_hash = f"https://{('civitai.red' if gl.nsfw else 'civitai.com')}/api/v1/model-versions/by-hash/{sha256}"
         else:
             return modelId if modelId else None
 
@@ -914,10 +914,11 @@ def get_save_path_and_name(install_path, file_name, api_response, sub_folder=Non
     
     return save_path, name
 
-def file_scan(folders, ver_finish, tag_finish, installed_finish, preview_finish, overwrite_toggle, tile_count, gen_hash, create_html, progress=gr.Progress() if queue else None):
+def file_scan(folders, ver_finish, tag_finish, installed_finish, preview_finish, overwrite_toggle, tile_count, gen_hash, create_html, nsfw, progress=gr.Progress() if queue else None):
     global no_update
     proxies, ssl = _api.get_proxies()
     gl.scan_files = True
+    gl.nsfw = nsfw
     no_update = False
     if from_ver:
         number = _download.random_number(ver_finish)
@@ -1043,7 +1044,7 @@ def file_scan(folders, ver_finish, tag_finish, installed_finish, preview_finish,
     if not from_installed:
         model_chunks = list(chunks(all_model_ids, 500))
 
-        base_url = "https://civitai.com/api/v1/models?limit=100&nsfw=true"
+        base_url = f"https://{('civitai.red' if gl.nsfw else 'civitai.com')}/api/v1/models?limit=100&nsfw={('true' if gl.nsfw else 'false')}"
         url_list = [f"{base_url}{''.join(chunk)}" for chunk in model_chunks]
 
         url_count = len(all_model_ids) // 100
@@ -1117,7 +1118,7 @@ def file_scan(folders, ver_finish, tag_finish, installed_finish, preview_finish,
     
     model_chunks = list(chunks(all_model_ids, tile_count))
 
-    base_url = "https://civitai.com/api/v1/models?limit=100&nsfw=true"
+    base_url = f"https://{('civitai.red' if gl.nsfw else 'civitai.com')}/api/v1/models?limit=100&nsfw={('true' if gl.nsfw else 'false')}"
     gl.url_list = {i+1: f"{base_url}{''.join(chunk)}" for i, chunk in enumerate(model_chunks)}
     
     if from_ver:

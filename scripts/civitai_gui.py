@@ -209,7 +209,7 @@ def on_ui_tabs():
                         base_filter = gr.Dropdown(label='Base model:', multiselect=True, choices=get_base_models(), value=None, type="value", elem_id="centerText")
                     with gr.Row():
                         period_type = gr.Dropdown(label='Time period:', choices=["All Time", "Year", "Month", "Week", "Day"], value="All Time", type="value", elem_id="centerText")
-                        sort_type = gr.Dropdown(label='Sort by:', choices=["Newest","Oldest","Most Downloaded","Highest Rated","Most Liked","Most Buzz","Most Discussed","Most Collected","Most Images"], value="Most Downloaded", type="value", elem_id="centerText")
+                        sort_type = gr.Dropdown(label='Sort by:', choices=["Newest","Oldest","Most Downloaded","Highest Rated","Most Liked","Recently Added","Most Discussed","Most Collected","Most Images"], value="Most Downloaded", type="value", elem_id="centerText")
                     with gr.Row(elem_id=component_id):
                         create_json = gr.Checkbox(label=f"Save info after download", value=True, elem_id=toggle1, min_width=171)
                         show_nsfw = gr.Checkbox(label="NSFW content", value=False, elem_id=toggle2, min_width=107)
@@ -765,7 +765,8 @@ def on_ui_tabs():
             overwrite_toggle,
             tile_count_slider,
             skip_hash_toggle,
-            do_html_gen
+            do_html_gen,
+            show_nsfw
         ]
         
         load_to_browser_inputs = [
@@ -796,7 +797,8 @@ def on_ui_tabs():
             search_term.submit: (_api.initial_model_page, True),
             page_slider_trigger.change: (_api.initial_model_page, False),
             get_next_page.click: (_api.next_model_page, False),
-            get_prev_page.click: (_api.prev_model_page, False)
+            get_prev_page.click: (_api.prev_model_page, False),
+            show_nsfw.change: (_api.initial_model_page, True)
         }
 
         for trigger, (function, use_refresh_inputs) in page_btn_list.items():

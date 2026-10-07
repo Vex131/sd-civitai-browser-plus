@@ -1,19 +1,23 @@
-<h1 align="center">I have unfortunately stopped developing this extension</h1>
+<h1 align="center">CivitAI Browser+ — maintained fork</h1>
 
-**This project has been archived as I'm no longer actively maintaining it. There are several reasons for this decision:**
+> **This is an actively maintained fork of [BlafKing's sd-civitai-browser-plus](https://github.com/BlafKing/sd-civitai-browser-plus), kept alive as a lifeline for the original extension.** The upstream project was archived, but the extension still breaks against changes to the CivitAI API and Stable Diffusion WebUI, so this fork continues to patch and maintain it.
 
-1. The extension breaks frequently due to changes in the CivitAI API and SD-WebUI
-2. I no longer use SD-WebUI myself (which was my original motivation for creating this)
-3. After working with various Python UI libraries, I've found Gradio to be particularly cumbersome for this type of project
-4. The codebase wasn't designed as well as it could have been as this was my first python project, so it's a real mess to implement changes
-
-**I encourage you to try an alternative actively maintained version from SignalFlagz [here](https://github.com/SignalFlagZ/sd-webui-civbrowser), which this project was originally based off of.**
-**Thank you to everyone who used and contributed to this project over time.**
+**Lineage:** [SignalFlagZ/sd-civitai-browser](https://github.com/SignalFlagZ/sd-civitai-browser) → [BlafKing/sd-civitai-browser-plus](https://github.com/BlafKing/sd-civitai-browser-plus) → this fork.
 
 ![CivitAI Browser-05+](https://github.com/BlafKing/sd-civitai-browser-plus/assets/9644716/95afcc41-56f0-4398-8779-51cb2a9e2f55)
 
 ---
 ### Extension for [Automatic1111's Stable Diffusion Web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+
+<h1>What this fork changes 🔧</h1>
+
+* **CivitAI API compatibility** — browsing, search, model info, and the Update Models scan work against the current CivitAI API.
+* **Content toggle wiring** — the content toggle now correctly drives both the Browser and the Update Models (`file_scan`) flows.
+* **Cleaner filenames** — removed the trailing `_<fileId>` numeric suffix from downloaded model filenames.
+* **Sort options** — replaced the invalid `Most Buzz` option with `Recently Added`.
+* **Crash fix** — "Update model info & tags" no longer aborts when a model version has a null `publishedAt`.
+
+---
 
 <h1>Features 🚀</h1>
 <h3>Browse all models from CivitAI 🧩</h3>
@@ -79,7 +83,13 @@ These settings can be found under the "Settings" tab in Web-UI and then under th
 
 # How to install 📘
 
-<h3>Automatic Installation:</h3>
+<h3>Automatic Installation (recommended):</h3>
+
+In Web-UI, go to **Extensions → Install to tab → "Install extension from a public URL"**, paste the URL below, click Install, then restart Web-UI:
+
+```
+https://github.com/Vex131/sd-civitai-browser-plus.git
+```
 
 ![HowTo](https://github.com/BlafKing/sd-civitai-browser-plus/assets/9644716/91a8f636-0fd5-4964-8fb4-830a5c22254a)
 
@@ -110,6 +120,14 @@ https://github.com/BlafKing/sd-civitai-browser-plus/assets/9644716/44c5c7a0-4854
 
 # Changelog 📋
 
+<h3>v3.6.1</h3>
+
+* CivitAI API compatibility across browsing, search, model info, and Update Models.
+* Removed the trailing _fileId numeric suffix from model filenames.
+* Replaced the invalid "Most Buzz" sort option with "Recently Added".
+* Fixed a crash in "Update model info & tags" when a model version has a null publishedAt.
+
+---
 <h3>v3.6.0</h3>
 
 * Feature: Ability to set custom default sub folders.
